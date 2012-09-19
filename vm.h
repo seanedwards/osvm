@@ -5,68 +5,57 @@
 #include <stdint.h>
 
 #define MAX_MEM 150 // (1 << (8 * 3))
+#define PTR_REGS 4
+#define DAT_REGS 3
+
+typedef uint8_t vm_addr_t;
 
 typedef struct
 {
 	uint8_t opc;
 	uint8_t op1;
 	uint8_t op2;
-} instruction_t;
+} vm_instruction_t;
 
-typedef enum
+typedef struct
 {
-	REG_ACC = 0,
-	REG_R0 = 1,
-	REG_R2 = 2,
-	REG_R3 = 3,
-	REG_COUNT32 = 4,
-
-	REG_PR0 = 0,
-	REG_PR1 = 1,
-	REG_PR2 = 2,
-	REG_PR3 = 3,
-	REG_PC = 4,
-	REG_SP = 5,
-	REG_PSW = 6,
-	REG_COUNT16 = 7
-} vm_reg;
-
-typedef enum
-{
-	ERR_NONE = 0,
-	ERR_BADINST = 1
-} vm_err;
+    uint8_t unused;
+    uint16_t data;
+} vm_word_t;
 
 typedef enum
 {
     VM_NONE = 0,
-    VM_RUN = 1
-} vm_flags;
+    VM_RUN = 1,
+    VM_BADINST = 2,
+    VM_DBGMODE = 4,
+    VM_STEPMODE = 8,
+    
+    VM_ERROR = 16,
+} vm_flags_t;
 
 typedef struct
 {
-	uint8_t* vm_ram;
-	uint32_t* vm_r; // registers
-	uint16_t* vm_pr; // pointer registers
-	instruction_t* vm_ir; // instruction register
+    vm_flags_t flags; // VM state
     
-    char vm_flags;
+	vm_word_t ram[MAX_MEM];
+    
+	vm_word_t dreg[DAT_REGS]; // data registers
+    vm_addr_t preg[PTR_REGS]; // Pointer registers
+    
+	vm_instruction_t ir; // instruction register
+    
+    vm_word_t acc; // accumulator
+    vm_addr_t pc;  // program counter
+    vm_addr_t sp;  // stack pointer
+    vm_word_t psw; // process status word
 } vm_t;
 
-uint32_t* vm_r32(vm_t*, uint8_t); // Fetch a value from a 32-bit register
-uint16_t* vm_r16(vm_t*, uint8_t); // Fetch a value from a 16-bit register
-
-uint32_t* vm_ram32(vm_t*, uint16_t); // Fetch a 32-bit value from memory.
-uint8_t* vm_ram8(vm_t*, uint16_t); // Fetch an 8-bit value from memory.
-instruction_t* vm_rami(vm_t*, uint16_t); // Fetch a 24-bit instruction from memory.
 
 vm_t* vm_init();
 void vm_close(vm_t* vm);
 
 void vm_run(vm_t*);
-
-vm_err vm_fetch(vm_t*);
-vm_err vm_exec(vm_t*);
 
 
 #endif // _VM_H_

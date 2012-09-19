@@ -39,7 +39,8 @@ typedef enum
 	OP_HALT = 26,
 
 	// Extensions
-	OP_NOOP = 254
+    OP_NOOP = 98,
+	OP_DBGBRK = 99
 } op;
 
 #endif // _OPCODES_H_
