@@ -21,10 +21,10 @@ uint8_t parse_2digit(const char* str)
 
 uint16_t parse_4digit(const char* str)
 {
-    return ((str[0] - '0') * 0x1000) +
-        ((str[1] - '0') * 0x0100) +
-        ((str[2] - '0') * 0x0010) +
-        ((str[3] - '0') * 0x0001);
+    return ((str[0] - '0') * 1000) +
+        ((str[1] - '0') * 100) +
+        ((str[2] - '0') * 10) +
+        ((str[3] - '0') * 1);
 }
 
 void parse_pbrain_instruction(vm_instruction_t* inst, const char* str)
