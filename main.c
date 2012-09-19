@@ -46,13 +46,10 @@ int main(int argc, char** argv)
                 break;
                 
             case 'h':
-                fprintf(stderr, "Usage: %s [-ds] -i <file>\n", argv[0]);
+            default: /* '?' */
+                fprintf(stderr, "Usage: %s [-ds] -<p|a|b> -i <file>\n", argv[0]);
                 vm_close(vm);
                 return 0;
-            default: /* '?' */
-                fprintf(stderr, "Usage: %s [-ds] -i <file>\n", argv[0]);
-                vm_close(vm);
-                exit(EXIT_FAILURE);
         }
     }
 

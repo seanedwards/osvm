@@ -12,7 +12,7 @@ opcode_t* vm_opcodes = 0;
 #define DBG_PRINTF3(vm, x, a1, a2, a3) if((vm->flags & (VM_DBGMODE|VM_STEPMODE)) != 0) printf(x, a1, a2, a3)
 #define DBG_PRINTF4(vm, x, a1, a2, a3, a4) if((vm->flags & (VM_DBGMODE|VM_STEPMODE)) != 0) printf(x, a1, a2, a3, a4)
 
-#define DBG_PRINTOP(vm, desc) DBG_PRINTF4(vm, "PC=%2d: %s %d %d\n", vm->pc, desc, vm->ir.op1, vm->ir.op2)
+#define DBG_PRINTOP(vm, desc) DBG_PRINTF4(vm, "PC=%02d: %s %d %d\n", vm->pc, desc, vm->ir.op1, vm->ir.op2)
 
 
 void i_noop(vm_t* vm) { DBG_PRINTOP(vm, "NOOP"); }

@@ -19,11 +19,34 @@ uint8_t parse_2digit(const char* str)
     return ((str[0] - '0') * 10) + (str[1] - '0');
 }
 
+uint16_t parse_4digit(const char* str)
+{
+    return ((str[0] - '0') * 0x1000) +
+        ((str[1] - '0') * 0x0100) +
+        ((str[2] - '0') * 0x0010) +
+        ((str[3] - '0') * 0x0001);
+}
+
 void parse_pbrain_instruction(vm_instruction_t* inst, const char* str)
 {
     inst->opc = parse_2digit(str);
-    inst->op1 = parse_2digit(str + 2);
-    inst->op2 = parse_2digit(str + 4);
+    
+    switch (inst->opc) {
+        // Parse immediate instructions as 4-digit numbers
+        case 3: // ACLOADI
+        case 12: // ADDI
+        case 13: // SUBI
+        case 22: // CMPEQI
+        case 23: // CMPLTI
+            ((vm_word_t*)inst)->data = parse_4digit(str + 2);
+            break;
+            
+        // Otherwise parse it as two 2-digit numbers
+        default:
+            inst->op1 = parse_2digit(str + 2);
+            inst->op2 = parse_2digit(str + 4);
+            break;
+    }
 }
 
 void parse_pbrain(vm_t* vm, const char* src, size_t len)
