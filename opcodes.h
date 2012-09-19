@@ -31,7 +31,7 @@ typedef enum
 	OP_CMPEQR = 20, // Compare equal register: if AC == Rn then PSW[0] = 1 else PSW[0] = 0
 	OP_CMPLTR = 21, // Compare less register : if AC <  Rn then PSW[0] = 1 else PSW[0] = 0
 	OP_CMPEQI = 22, // Compare equal immediate: if AC == XXXX then PSW[0] = 1 else PSW[0] = 0
-	OP_CMPLTI = 23, // Compare equal immediate: if AC <  XXXX then PSW[0] = 1 else PSW[0] = 0
+	OP_CMPLTI = 23, // Compare less immediate: if AC <  XXXX then PSW[0] = 1 else PSW[0] = 0
 
 	OP_BRC = 24, // Branch conditional: if PSW[0] = T then PC = XX
 	OP_BRU = 25, // Branch unconditional: PC = XX

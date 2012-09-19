@@ -29,10 +29,14 @@ void parse_pbrain_instruction(vm_instruction_t* inst, const char* str)
 void parse_pbrain(vm_t* vm, const char* src, size_t len)
 {
     size_t linenum = 1;
-    size_t colnum = 0;
     
+    size_t inst = 0;
     for (size_t i = 0; i < len; ++i) {
-        if (src[i] == '#')
+        if (src[i] != '#') { // Parse opcode.
+            parse_pbrain_instruction((vm_instruction_t*)&vm->ram[inst], &src[i]);
+            i += 6;
+            ++inst;
+        }
         
         while (i < len && src[i] != '\n') ++i; // Fast forward over the rest of the line.
         ++linenum;

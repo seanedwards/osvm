@@ -32,6 +32,7 @@
 		AF59D5101609201C00D422F6 /* vm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vm.h; sourceTree = SOURCE_ROOT; };
 		AF61256A160A2AD000CE0F16 /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parser.c; sourceTree = SOURCE_ROOT; };
 		AF61256D160A2ADE00CE0F16 /* parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parser.h; sourceTree = SOURCE_ROOT; };
+		AF612584160A647500CE0F16 /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.txt; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +65,7 @@
 		AF29E02616091FE200888BF7 /* vm */ = {
 			isa = PBXGroup;
 			children = (
+				AF612584160A647500CE0F16 /* test.txt */,
 				AF59D50D1609201C00D422F6 /* main.c */,
 				AF59D50E1609201C00D422F6 /* opcodes.h */,
 				AF59D50F1609201C00D422F6 /* vm.c */,
