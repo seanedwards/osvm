@@ -31,6 +31,7 @@
 		AF59D50F1609201C00D422F6 /* vm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vm.c; sourceTree = SOURCE_ROOT; };
 		AF59D5101609201C00D422F6 /* vm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vm.h; sourceTree = SOURCE_ROOT; };
 		AF5D8B90160AA53E00F249D3 /* sum-0-9.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = "sum-0-9.txt"; path = "programs/sum-0-9.txt"; sourceTree = SOURCE_ROOT; };
+		AF5D8B99160B976B00F249D3 /* fibonacci.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = fibonacci.txt; path = programs/fibonacci.txt; sourceTree = SOURCE_ROOT; };
 		AF61256A160A2AD000CE0F16 /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parser.c; sourceTree = SOURCE_ROOT; };
 		AF61256D160A2ADE00CE0F16 /* parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parser.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -80,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				AF5D8B90160AA53E00F249D3 /* sum-0-9.txt */,
+				AF5D8B99160B976B00F249D3 /* fibonacci.txt */,
 			);
 			name = programs;
 			sourceTree = "<group>";

@@ -1,0 +1,21 @@
+000040 # LOAD P0 - counter
+000141 # LOAD P1 - last1
+000242 # LOAD P2 - last2
+030001 # AC <- 0001
+060199 # M(P1) <- AC
+030000 # AC <- 0000
+060099 # M(P0) <- AC
+060299 # M(P2) <- AC
+040099 # AC <- M(P0)
+220019 # PSW[0] = (AC == 19)         :loop
+242000 # BRC :halt
+040199 # AC <- M(P1)
+160299 # AC += M(P2)
+100001 # R0 <- M(P1)
+060199 # M(P1) <- AC
+080200 # M(P1) <- R0
+040099 # AC <- M(P0)  Increment counter
+120001 # AC += 1
+060099 # M(P0) <- AC
+260900 # JMP :loop
+279999 #                          :halt
