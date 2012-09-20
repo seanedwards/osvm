@@ -32,6 +32,8 @@
 		AF59D5101609201C00D422F6 /* vm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vm.h; sourceTree = SOURCE_ROOT; };
 		AF5D8B90160AA53E00F249D3 /* sum-0-9.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = "sum-0-9.txt"; path = "programs/sum-0-9.txt"; sourceTree = SOURCE_ROOT; };
 		AF5D8B99160B976B00F249D3 /* fibonacci.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = fibonacci.txt; path = programs/fibonacci.txt; sourceTree = SOURCE_ROOT; };
+		AF5D8BA0160BC7D900F249D3 /* asm.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = asm.py; path = asm/asm.py; sourceTree = SOURCE_ROOT; };
+		AF5D8BA3160BCC2000F249D3 /* fibonacci.pasm */ = {isa = PBXFileReference; lastKnownFileType = text; name = fibonacci.pasm; path = asm/programs/fibonacci.pasm; sourceTree = SOURCE_ROOT; };
 		AF61256A160A2AD000CE0F16 /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parser.c; sourceTree = SOURCE_ROOT; };
 		AF61256D160A2ADE00CE0F16 /* parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parser.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -66,6 +68,7 @@
 		AF29E02616091FE200888BF7 /* vm */ = {
 			isa = PBXGroup;
 			children = (
+				AF5D8B9F160BC7BD00F249D3 /* asm */,
 				AF612586160AA2A900CE0F16 /* programs */,
 				AF59D50D1609201C00D422F6 /* main.c */,
 				AF59D50E1609201C00D422F6 /* opcodes.h */,
@@ -75,6 +78,23 @@
 				AF61256D160A2ADE00CE0F16 /* parser.h */,
 			);
 			path = vm;
+			sourceTree = "<group>";
+		};
+		AF5D8B9F160BC7BD00F249D3 /* asm */ = {
+			isa = PBXGroup;
+			children = (
+				AF5D8BA1160BCA5200F249D3 /* programs */,
+				AF5D8BA0160BC7D900F249D3 /* asm.py */,
+			);
+			name = asm;
+			sourceTree = "<group>";
+		};
+		AF5D8BA1160BCA5200F249D3 /* programs */ = {
+			isa = PBXGroup;
+			children = (
+				AF5D8BA3160BCC2000F249D3 /* fibonacci.pasm */,
+			);
+			name = programs;
 			sourceTree = "<group>";
 		};
 		AF612586160AA2A900CE0F16 /* programs */ = {
@@ -87,6 +107,22 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		AF5D8B9B160BC71000F249D3 /* asm */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = AF5D8B9C160BC71000F249D3 /* Build configuration list for PBXLegacyTarget "asm" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/python;
+			dependencies = (
+			);
+			name = asm;
+			passBuildSettingsInEnvironment = 1;
+			productName = asm;
+		};
+/* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
 		AF29E02216091FE200888BF7 /* vm */ = {
@@ -128,6 +164,7 @@
 			projectRoot = "";
 			targets = (
 				AF29E02216091FE200888BF7 /* vm */,
+				AF5D8B9B160BC71000F249D3 /* asm */,
 			);
 		};
 /* End PBXProject section */
@@ -209,6 +246,27 @@
 			};
 			name = Release;
 		};
+		AF5D8B9D160BC71000F249D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUGGING_SYMBOLS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AF5D8B9E160BC71000F249D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -229,6 +287,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		AF5D8B9C160BC71000F249D3 /* Build configuration list for PBXLegacyTarget "asm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF5D8B9D160BC71000F249D3 /* Debug */,
+				AF5D8B9E160BC71000F249D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
