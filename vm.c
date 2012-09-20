@@ -35,7 +35,7 @@ void print_vm(vm_t* vm) {
 #define DBG_PRINTF4(vm, x, a1, a2, a3, a4) if((vm->flags & (VM_DBGMODE|VM_STEPMODE)) != 0) printf(x, a1, a2, a3, a4)
 
 
-void i_noop(vm_t* vm) { }
+void i_noop(vm_t* vm) { } // OP_NOOP = 98
 
 void i_lpi(vm_t* vm) { // OP_LPI = 0
     vm->preg[vm->ir.op1] = vm->ir.op2;}
@@ -87,80 +87,94 @@ void i_rloadd(vm_t* vm) { // OP_RLOADD = 10
 }
 
 
-void i_addi(vm_t* vm) { // OP_ADDI
+void i_addi(vm_t* vm) { // OP_ADDI = 12
     vm->acc.data += ((vm_word_t*)&vm->ir)->data;
 }
 
-void i_subi(vm_t* vm) { // OP_SUBI
+void i_subi(vm_t* vm) { // OP_SUBI = 13
     vm->acc.data -= ((vm_word_t*)&vm->ir)->data;
 }
 
-void i_addr(vm_t* vm) { // OP_ADDR
+void i_addr(vm_t* vm) { // OP_ADDR = 14
     vm->acc.data += vm->dreg[vm->ir.op1].data;
 }
 
-void i_subr(vm_t* vm) { // OP_SUBR
+void i_subr(vm_t* vm) { // OP_SUBR = 15
     vm->acc.data -= vm->dreg[vm->ir.op1].data;
 }
 
 
-void i_addmr(vm_t* vm) { // OP_ADDMR
+void i_addmr(vm_t* vm) { // OP_ADDMR = 16
     vm->acc.data += vm->ram[vm->preg[vm->ir.op1]].data;
 }
 
-void i_addmd(vm_t* vm) { // OP_ADDMD
+void i_addmd(vm_t* vm) { // OP_ADDMD = 17
     vm->acc.data += vm->ram[vm->ir.op1].data;
 }
 
-void i_submr(vm_t* vm) { // OP_SUBMR
+void i_submr(vm_t* vm) { // OP_SUBMR = 18
     vm->acc.data += vm->ram[vm->preg[vm->ir.op1]].data;
 }
 
-void i_submd(vm_t* vm) { // OP_SUBMD
+void i_submd(vm_t* vm) { // OP_SUBMD = 19
     vm->acc.data += vm->ram[vm->ir.op1].data;
 }
 
 
-void i_cmpeqr(vm_t* vm) { // OP_CMPEQR
+void i_cmpeqr(vm_t* vm) { // OP_CMPEQR = 20
     vm->psw.data &= ~0x01;
     if (vm->acc.data == vm->dreg[vm->ir.op1].data)
         vm->psw.data |= 0x01;
 }
 
-void i_cmpltr(vm_t* vm) { // OP_CMPLTR
+void i_cmpltr(vm_t* vm) { // OP_CMPLTR = 21
     vm->psw.data &= ~0x01;
     if (vm->acc.data < vm->dreg[vm->ir.op1].data)
         vm->psw.data |= 0x01;
 }
 
-void i_cmpeqi(vm_t* vm) { // OP_CMPEQI
+void i_cmpeqi(vm_t* vm) { // OP_CMPEQI = 22
     vm->psw.data &= ~0x01;
     if (vm->acc.data == ((vm_word_t*)&vm->ir)->data)
         vm->psw.data |= 0x01;
 }
 
-void i_cmplti(vm_t* vm) { // OP_CMPLTI
+void i_cmplti(vm_t* vm) { // OP_CMPLTI = 23
     vm->psw.data &= ~0x01;
     if (vm->acc.data < ((vm_word_t*)&vm->ir)->data)
         vm->psw.data |= 0x01;
 }
 
 
-void i_brc(vm_t* vm) { // OP_BRC
-    if (vm->psw.data & 0x01) {
+void i_brc(vm_t* vm) { // OP_BRC = 24
+    if ((vm->psw.data & 0x01) != 0) {
         vm->pc = vm->ir.op1;
     }
 }
 
-void i_bru(vm_t* vm) { // OP_BRU
+void i_brf(vm_t* vm) { // OP_BRC = 25
+    if ((vm->psw.data & 0x01) == 0) {
+        vm->pc = vm->ir.op1;
+    }
+}
+
+void i_bru(vm_t* vm) { // OP_BRU = 26
     vm->pc = vm->ir.op1;
 }
 
 
-void i_halt(vm_t* vm) { // OP_HALT
+void i_halt(vm_t* vm) { // OP_HALT = 27
     vm->flags &= ~VM_RUN;
 }
 
+
+void i_printchr(vm_t* vm) { // OP_PRINTCHR
+    printf("%c", (uint8_t)vm->acc.data);
+}
+
+void i_printnum(vm_t* vm) { // OP_PRINTNUM
+    printf("%d", vm->acc.data);
+}
 
 void i_dbgbrk(vm_t* vm) { // OP_DBGBRK
     vm->flags |= VM_STEPMODE;
@@ -206,10 +220,13 @@ vm_t* vm_init()
     vm_opcodes[OP_CMPLTI] = &i_cmplti;
     
     vm_opcodes[OP_BRC] = &i_brc;
+    vm_opcodes[OP_BRF] = &i_brf;
     vm_opcodes[OP_BRU] = &i_bru;
     
     vm_opcodes[OP_HALT] = &i_halt;
     
+    vm_opcodes[OP_PRINTCHR] = &i_printchr;
+    vm_opcodes[OP_PRINTNUM] = &i_printnum;
     vm_opcodes[OP_DBGBRK] = &i_dbgbrk;
     vm_opcodes[OP_NOOP] = &i_noop;
     
@@ -275,7 +292,6 @@ void vm_run(vm_t* vm)
                 printf("dbg> ");
                 chr = getchar();
                 if (chr == '\n') continue;
-                while (getchar() != '\n');
                 
                 switch(chr) {
                     case 'q':
@@ -294,7 +310,8 @@ void vm_run(vm_t* vm)
                         print_vm(vm);
                         printf("Memdump: \n");
                         for (size_t i = 0; i < MAX_MEM; ++i) {
-                            if (i % 0x0A == 0) printf("[A:%03d] ", (uint16_t)i);
+                            if (i % 0x0A == 0) printf("[A:%03d]", (uint16_t)i);
+                            if (i % 0x05 == 0) printf(" ");
                             printf("%02X%04X ", (uint8_t)vm->ram[i].unused, vm->ram[i].data);
                             if ((i+1) % 0x0A == 0) printf("\n");
                         }
@@ -305,7 +322,7 @@ void vm_run(vm_t* vm)
                     case '?':
                     case 'h':
                     case 'H':
-                        printf("\nDebugger usage:\n"
+                        printf("Debugger usage:\n"
                                "r: Resume normal operation\n"
                                "s: Step to next instruction\n"
                                "h: Print this help message\n"
@@ -314,6 +331,8 @@ void vm_run(vm_t* vm)
                                );
                         break;
                 }
+                
+                while (getchar() != '\n');
             }
         }
 	}

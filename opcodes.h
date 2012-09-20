@@ -34,11 +34,14 @@ typedef enum
 	OP_CMPLTI = 23, // Compare less immediate: if AC <  XXXX then PSW[0] = 1 else PSW[0] = 0
 
 	OP_BRC = 24, // Branch conditional: if PSW[0] = T then PC = XX
-	OP_BRU = 25, // Branch unconditional: PC = XX
+    OP_BRF = 25, // Branch false conditional: if PSW[0] = F then PC = XX
+	OP_BRU = 26, // Branch unconditional: PC = XX
 
-	OP_HALT = 26,
+	OP_HALT = 27,
 
 	// Extensions
+    OP_PRINTCHR = 96, // Print character contents of accumulator
+    OP_PRINTNUM = 97, // Print numeric contents of accumulator
     OP_NOOP = 98,
 	OP_DBGBRK = 99
 } op;
