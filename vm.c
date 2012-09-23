@@ -12,11 +12,12 @@ void print_vm(vm_t* vm) {
     printf("acc: %04d pc: %02d sp:%02d psw: %04d ", vm->acc.data, vm->pc, vm->sp, vm->psw.data);
     
     printf("Dx: {");
-    for (size_t i = 0; i < DAT_REGS; ++i) printf(" %05d", vm->dreg[i].data);
+    size_t i = 0;
+    for (i = 0; i < DAT_REGS; ++i) printf(" %05d", vm->dreg[i].data);
     printf(" } ");
     
     printf("Px: {");
-    for (size_t i = 0; i < PTR_REGS; ++i) printf(" %03d", vm->preg[i]);
+    for (i = 0; i < PTR_REGS; ++i) printf(" %03d", vm->preg[i]);
     printf(" } ");
     
     printf("Flags: {");
@@ -26,6 +27,15 @@ void print_vm(vm_t* vm) {
     if (vm->flags & VM_STEPMODE) printf(" STEPMODE");
     if (vm->flags & VM_ERROR) printf(" ERROR");
     printf(" }\n");
+}
+
+void print_ram(vm_t* vm) {
+    for (size_t i = 0; i < vm->ram_size; ++i) {
+        if (i % 0x0A == 0) printf("[A:%03d]", (uint16_t)i);
+        if (i % 0x05 == 0) printf(" ");
+        printf("%02X%04X ", (uint8_t)vm->ram[i].unused, vm->ram[i].data);
+        if ((i+1) % 0x0A == 0) printf("\n");
+    }
 }
 
 #define DBG_PRINTF(vm, x) if((vm->flags & (VM_DBGMODE|VM_STEPMODE)) != 0) printf(x)
@@ -181,10 +191,9 @@ void i_dbgbrk(vm_t* vm) { // OP_DBGBRK
     printf("Breakpoint hit. Type '?' for debugger help.\n");
 }
 
-vm_t* vm_init()
-{
-	vm_t* vm = (vm_t*)malloc(sizeof(vm_t*));
-    memset(vm, 0, sizeof(vm_t));
+void vm_setup_opcodes() {
+    static char initialized = 0;
+    if (initialized) return;
     
     vm_opcodes = (opcode_t*)calloc(sizeof(opcode_t), 100);
     memset(vm_opcodes, 0, sizeof(opcode_t) * 100);
@@ -230,18 +239,32 @@ vm_t* vm_init()
     vm_opcodes[OP_DBGBRK] = &i_dbgbrk;
     vm_opcodes[OP_NOOP] = &i_noop;
     
+    initialized = 1;
+}
+
+vm_t* vm_init(uint32_t ram_size)
+{
+    vm_setup_opcodes();
+    
+	vm_t* vm = (vm_t*)malloc(sizeof(vm_t*));
+    memset(vm, 0, sizeof(vm_t));
+    
+    vm->ram_size = ram_size;
+    vm->ram = (vm_word_t*)calloc(sizeof(vm_word_t), vm->ram_size);
+    
 	return vm;
 }
 
 void vm_close(vm_t* vm)
 {
+    free(vm->ram);
 	free(vm);
 }
 
 
 void vm_fetch(vm_t* vm)
 {
-    if (vm->pc >= MAX_MEM) {
+    if (vm->pc >= vm->ram_size) {
         fprintf(stderr, "Error: Program counter out of range.\n");
         vm->flags |= VM_ERROR;
         return;
@@ -309,12 +332,7 @@ void vm_run(vm_t* vm)
                         printf("VM State:\n");
                         print_vm(vm);
                         printf("Memdump: \n");
-                        for (size_t i = 0; i < MAX_MEM; ++i) {
-                            if (i % 0x0A == 0) printf("[A:%03d]", (uint16_t)i);
-                            if (i % 0x05 == 0) printf(" ");
-                            printf("%02X%04X ", (uint8_t)vm->ram[i].unused, vm->ram[i].data);
-                            if ((i+1) % 0x0A == 0) printf("\n");
-                        }
+                        print_ram(vm);
                         break;
                         
                     default:
@@ -336,5 +354,11 @@ void vm_run(vm_t* vm)
             }
         }
 	}
+    
+    if ((vm->flags & (VM_DBGMODE|VM_STEPMODE)) != 0) {
+        printf("Execution complete. Final VM state: \n");
+        print_vm(vm);
+        print_ram(vm);
+    }
 }
 

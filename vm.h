@@ -4,7 +4,6 @@
 #include "opcodes.h"
 #include <stdint.h>
 
-#define MAX_MEM 150 // (1 << (8 * 3))
 #define PTR_REGS 4
 #define DAT_REGS 3
 
@@ -41,7 +40,8 @@ typedef struct
     vm_word_t psw; // process status word
 
     vm_flags_t flags; // VM state
-	vm_word_t ram[MAX_MEM];
+	vm_word_t* ram;
+    uint32_t ram_size;
     
 	vm_word_t dreg[DAT_REGS]; // data registers
     vm_addr_t preg[PTR_REGS]; // Pointer registers
@@ -51,7 +51,7 @@ typedef struct
 } vm_t;
 
 
-vm_t* vm_init();
+vm_t* vm_init(uint32_t ram_size);
 void vm_close(vm_t* vm);
 
 void vm_run(vm_t*);

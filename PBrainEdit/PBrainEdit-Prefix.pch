@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'PBrainEdit' target in the 'PBrainEdit' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

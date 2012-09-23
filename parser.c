@@ -14,17 +14,20 @@
 
 uint8_t parse_2digit(const char* str)
 {
-    if (isalpha(str[0])) return str[1] - '0';
-    
-    return ((str[0] - '0') * 10) + (str[1] - '0');
+    uint8_t ret = 0;
+    if (isdigit(str[0])) ret += (str[0] - '0') * 10;
+    if (isdigit(str[0])) ret += (str[1] - '0') * 1;
+    return ret;
 }
 
 uint16_t parse_4digit(const char* str)
 {
-    return ((str[0] - '0') * 1000) +
-        ((str[1] - '0') * 100) +
-        ((str[2] - '0') * 10) +
-        ((str[3] - '0') * 1);
+    uint16_t ret = 0;
+    if (isdigit(str[0])) ret += (str[0] - '0') * 1000;
+    if (isdigit(str[1])) ret += (str[1] - '0') * 100;
+    if (isdigit(str[2])) ret += (str[2] - '0') * 10;
+    if (isdigit(str[3])) ret += (str[3] - '0') * 1;
+    return ret;
 }
 
 void parse_pbrain_instruction(vm_instruction_t* inst, const char* str)
@@ -77,5 +80,5 @@ void parse_asm(const char* src, size_t len, void* ram)
 #endif
 void parse_binary(vm_t* vm, const char* src, size_t len)
 {
-    memcpy(vm->ram, src, max(len, MAX_MEM * sizeof(vm_word_t)));
+    memcpy(vm->ram, src, max(len, vm->ram_size * sizeof(vm_word_t)));
 }

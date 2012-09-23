@@ -15,7 +15,7 @@ def resolve(x):
 
 
 def op_noop(line): return "989999"
-def op_dat(line): return noop(line)
+def op_dat(line): return "98%04d" % resolve(line[1])
 def op_halt(line): return "279999"
 def op_printchr(line): return "969999"
 def op_printnum(line): return "979999"

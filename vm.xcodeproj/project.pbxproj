@@ -7,10 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF295EF1160CC839001A8F3B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF295EF0160CC839001A8F3B /* Cocoa.framework */; };
+		AF295EFB160CC839001A8F3B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AF295EF9160CC839001A8F3B /* InfoPlist.strings */; };
+		AF295EFD160CC839001A8F3B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AF295EFC160CC839001A8F3B /* main.m */; };
+		AF295F01160CC839001A8F3B /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = AF295EFF160CC839001A8F3B /* Credits.rtf */; };
+		AF295F04160CC839001A8F3B /* PBDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = AF295F03160CC839001A8F3B /* PBDocument.m */; };
+		AF295F07160CC839001A8F3B /* PBDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF295F05160CC839001A8F3B /* PBDocument.xib */; };
+		AF295F0A160CC839001A8F3B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF295F08160CC839001A8F3B /* MainMenu.xib */; };
+		AF295F12160CC839001A8F3B /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF295F11160CC839001A8F3B /* SenTestingKit.framework */; };
+		AF295F13160CC839001A8F3B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF295EF0160CC839001A8F3B /* Cocoa.framework */; };
+		AF295F1B160CC839001A8F3B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AF295F19160CC839001A8F3B /* InfoPlist.strings */; };
+		AF295F1E160CC839001A8F3B /* PBrainEditTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF295F1D160CC839001A8F3B /* PBrainEditTests.m */; };
+		AF295F25160CC84E001A8F3B /* vm.c in Sources */ = {isa = PBXBuildFile; fileRef = AF59D50F1609201C00D422F6 /* vm.c */; };
+		AF295F26160CC855001A8F3B /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = AF61256A160A2AD000CE0F16 /* parser.c */; };
 		AF59D5111609201C00D422F6 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AF59D50D1609201C00D422F6 /* main.c */; };
 		AF59D5121609201C00D422F6 /* vm.c in Sources */ = {isa = PBXBuildFile; fileRef = AF59D50F1609201C00D422F6 /* vm.c */; };
 		AF61256B160A2AD000CE0F16 /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = AF61256A160A2AD000CE0F16 /* parser.c */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AF295F14160CC839001A8F3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF29E01A16091FE200888BF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AF295EEC160CC839001A8F3B;
+			remoteInfo = PBrainEdit;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		AF29E02116091FE200888BF7 /* CopyFiles */ = {
@@ -25,6 +48,26 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AF295EED160CC839001A8F3B /* PBrainEdit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PBrainEdit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF295EF0160CC839001A8F3B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		AF295EF3160CC839001A8F3B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		AF295EF4160CC839001A8F3B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		AF295EF5160CC839001A8F3B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AF295EF8160CC839001A8F3B /* PBrainEdit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PBrainEdit-Info.plist"; sourceTree = "<group>"; };
+		AF295EFA160CC839001A8F3B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AF295EFC160CC839001A8F3B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AF295EFE160CC839001A8F3B /* PBrainEdit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PBrainEdit-Prefix.pch"; sourceTree = "<group>"; };
+		AF295F00160CC839001A8F3B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		AF295F02160CC839001A8F3B /* PBDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBDocument.h; sourceTree = "<group>"; };
+		AF295F03160CC839001A8F3B /* PBDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBDocument.m; sourceTree = "<group>"; };
+		AF295F06160CC839001A8F3B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/PBDocument.xib; sourceTree = "<group>"; };
+		AF295F09160CC839001A8F3B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		AF295F10160CC839001A8F3B /* PBrainEditTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PBrainEditTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF295F11160CC839001A8F3B /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		AF295F18160CC839001A8F3B /* PBrainEditTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PBrainEditTests-Info.plist"; sourceTree = "<group>"; };
+		AF295F1A160CC839001A8F3B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AF295F1C160CC839001A8F3B /* PBrainEditTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PBrainEditTests.h; sourceTree = "<group>"; };
+		AF295F1D160CC839001A8F3B /* PBrainEditTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PBrainEditTests.m; sourceTree = "<group>"; };
 		AF29E02316091FE200888BF7 /* vm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = vm; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF59D50D1609201C00D422F6 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = SOURCE_ROOT; };
 		AF59D50E1609201C00D422F6 /* opcodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opcodes.h; sourceTree = SOURCE_ROOT; };
@@ -39,6 +82,23 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AF295EEA160CC839001A8F3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF295EF1160CC839001A8F3B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF295F0C160CC839001A8F3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF295F12160CC839001A8F3B /* SenTestingKit.framework in Frameworks */,
+				AF295F13160CC839001A8F3B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AF29E02016091FE200888BF7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -49,10 +109,76 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AF295EEF160CC839001A8F3B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AF295EF0160CC839001A8F3B /* Cocoa.framework */,
+				AF295F11160CC839001A8F3B /* SenTestingKit.framework */,
+				AF295EF2160CC839001A8F3B /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AF295EF2160CC839001A8F3B /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AF295EF3160CC839001A8F3B /* AppKit.framework */,
+				AF295EF4160CC839001A8F3B /* CoreData.framework */,
+				AF295EF5160CC839001A8F3B /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		AF295EF6160CC839001A8F3B /* PBrainEdit */ = {
+			isa = PBXGroup;
+			children = (
+				AF295F02160CC839001A8F3B /* PBDocument.h */,
+				AF295F03160CC839001A8F3B /* PBDocument.m */,
+				AF295F05160CC839001A8F3B /* PBDocument.xib */,
+				AF295F08160CC839001A8F3B /* MainMenu.xib */,
+				AF295EF7160CC839001A8F3B /* Supporting Files */,
+			);
+			path = PBrainEdit;
+			sourceTree = "<group>";
+		};
+		AF295EF7160CC839001A8F3B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AF295EF8160CC839001A8F3B /* PBrainEdit-Info.plist */,
+				AF295EF9160CC839001A8F3B /* InfoPlist.strings */,
+				AF295EFC160CC839001A8F3B /* main.m */,
+				AF295EFE160CC839001A8F3B /* PBrainEdit-Prefix.pch */,
+				AF295EFF160CC839001A8F3B /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AF295F16160CC839001A8F3B /* PBrainEditTests */ = {
+			isa = PBXGroup;
+			children = (
+				AF295F1C160CC839001A8F3B /* PBrainEditTests.h */,
+				AF295F1D160CC839001A8F3B /* PBrainEditTests.m */,
+				AF295F17160CC839001A8F3B /* Supporting Files */,
+			);
+			path = PBrainEditTests;
+			sourceTree = "<group>";
+		};
+		AF295F17160CC839001A8F3B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AF295F18160CC839001A8F3B /* PBrainEditTests-Info.plist */,
+				AF295F19160CC839001A8F3B /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		AF29E01816091FE200888BF7 = {
 			isa = PBXGroup;
 			children = (
 				AF29E02616091FE200888BF7 /* vm */,
+				AF295EF6160CC839001A8F3B /* PBrainEdit */,
+				AF295F16160CC839001A8F3B /* PBrainEditTests */,
+				AF295EEF160CC839001A8F3B /* Frameworks */,
 				AF29E02416091FE200888BF7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,6 +187,8 @@
 			isa = PBXGroup;
 			children = (
 				AF29E02316091FE200888BF7 /* vm */,
+				AF295EED160CC839001A8F3B /* PBrainEdit.app */,
+				AF295F10160CC839001A8F3B /* PBrainEditTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -125,6 +253,42 @@
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
+		AF295EEC160CC839001A8F3B /* PBrainEdit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF295F1F160CC839001A8F3B /* Build configuration list for PBXNativeTarget "PBrainEdit" */;
+			buildPhases = (
+				AF295EE9160CC839001A8F3B /* Sources */,
+				AF295EEA160CC839001A8F3B /* Frameworks */,
+				AF295EEB160CC839001A8F3B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PBrainEdit;
+			productName = PBrainEdit;
+			productReference = AF295EED160CC839001A8F3B /* PBrainEdit.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AF295F0F160CC839001A8F3B /* PBrainEditTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF295F22160CC839001A8F3B /* Build configuration list for PBXNativeTarget "PBrainEditTests" */;
+			buildPhases = (
+				AF295F0B160CC839001A8F3B /* Sources */,
+				AF295F0C160CC839001A8F3B /* Frameworks */,
+				AF295F0D160CC839001A8F3B /* Resources */,
+				AF295F0E160CC839001A8F3B /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AF295F15160CC839001A8F3B /* PBXTargetDependency */,
+			);
+			name = PBrainEditTests;
+			productName = PBrainEditTests;
+			productReference = AF295F10160CC839001A8F3B /* PBrainEditTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 		AF29E02216091FE200888BF7 /* vm */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AF29E02D16091FE200888BF7 /* Build configuration list for PBXNativeTarget "vm" */;
@@ -165,11 +329,70 @@
 			targets = (
 				AF29E02216091FE200888BF7 /* vm */,
 				AF5D8B9B160BC71000F249D3 /* asm */,
+				AF295EEC160CC839001A8F3B /* PBrainEdit */,
+				AF295F0F160CC839001A8F3B /* PBrainEditTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		AF295EEB160CC839001A8F3B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF295EFB160CC839001A8F3B /* InfoPlist.strings in Resources */,
+				AF295F01160CC839001A8F3B /* Credits.rtf in Resources */,
+				AF295F07160CC839001A8F3B /* PBDocument.xib in Resources */,
+				AF295F0A160CC839001A8F3B /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF295F0D160CC839001A8F3B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF295F1B160CC839001A8F3B /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AF295F0E160CC839001A8F3B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		AF295EE9160CC839001A8F3B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF295EFD160CC839001A8F3B /* main.m in Sources */,
+				AF295F04160CC839001A8F3B /* PBDocument.m in Sources */,
+				AF295F25160CC84E001A8F3B /* vm.c in Sources */,
+				AF295F26160CC855001A8F3B /* parser.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF295F0B160CC839001A8F3B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF295F1E160CC839001A8F3B /* PBrainEditTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AF29E01F16091FE200888BF7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -182,17 +405,122 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		AF295F15160CC839001A8F3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AF295EEC160CC839001A8F3B /* PBrainEdit */;
+			targetProxy = AF295F14160CC839001A8F3B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AF295EF9160CC839001A8F3B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AF295EFA160CC839001A8F3B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		AF295EFF160CC839001A8F3B /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AF295F00160CC839001A8F3B /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		AF295F05160CC839001A8F3B /* PBDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AF295F06160CC839001A8F3B /* en */,
+			);
+			name = PBDocument.xib;
+			sourceTree = "<group>";
+		};
+		AF295F08160CC839001A8F3B /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AF295F09160CC839001A8F3B /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		AF295F19160CC839001A8F3B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AF295F1A160CC839001A8F3B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		AF295F20160CC839001A8F3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PBrainEdit/PBrainEdit-Prefix.pch";
+				INFOPLIST_FILE = "PBrainEdit/PBrainEdit-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		AF295F21160CC839001A8F3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PBrainEdit/PBrainEdit-Prefix.pch";
+				INFOPLIST_FILE = "PBrainEdit/PBrainEdit-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		AF295F23160CC839001A8F3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PBrainEdit.app/Contents/MacOS/PBrainEdit";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PBrainEdit/PBrainEdit-Prefix.pch";
+				INFOPLIST_FILE = "PBrainEditTests/PBrainEditTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		AF295F24160CC839001A8F3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PBrainEdit.app/Contents/MacOS/PBrainEdit";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PBrainEdit/PBrainEdit-Prefix.pch";
+				INFOPLIST_FILE = "PBrainEditTests/PBrainEditTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
 		AF29E02B16091FE200888BF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -216,12 +544,12 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -235,6 +563,11 @@
 		AF29E02E16091FE200888BF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = ansi;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_INPUT_FILETYPE = sourcecode.c.c;
+				GCC_VERSION = "";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -242,6 +575,11 @@
 		AF29E02F16091FE200888BF7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = ansi;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_INPUT_FILETYPE = sourcecode.c.c;
+				GCC_VERSION = "";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -270,6 +608,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AF295F1F160CC839001A8F3B /* Build configuration list for PBXNativeTarget "PBrainEdit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF295F20160CC839001A8F3B /* Debug */,
+				AF295F21160CC839001A8F3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AF295F22160CC839001A8F3B /* Build configuration list for PBXNativeTarget "PBrainEditTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF295F23160CC839001A8F3B /* Debug */,
+				AF295F24160CC839001A8F3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AF29E01D16091FE200888BF7 /* Build configuration list for PBXProject "vm" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -295,6 +651,7 @@
 				AF5D8B9E160BC71000F249D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

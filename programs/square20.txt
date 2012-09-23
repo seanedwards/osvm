@@ -1,0 +1,19 @@
+030020 # ACLOADI 20
+000020 # LPI 0 20
+000121 # LPI 1 21
+060099 # ACSTORR 0
+130001 # SUBI 1    # loop from 19 to 0
+060199 # ACSTORR 1 # store i
+110020 # RLOADD 0 20
+# :loop
+220000 # CMPEQI 0  # if i == 0
+241699 # BRC :halt # break
+040099 # ACLOADR 0 # load x
+140099 # ADDR 0    # x += R0
+060099 # ACSTORR 0 # store x
+040199 # ACLOADR 1 # load i
+130001 # SUBI 1    # i -= 1
+060199 # ACSTORR 1
+260799 # JMP :loop
+# :halt
+279999 # HALT
