@@ -3,6 +3,7 @@
 
 #include "opcodes.h"
 #include <stdint.h>
+#include <setjmp.h>
 
 #define PTR_REGS 4
 #define DAT_REGS 3
@@ -48,6 +49,9 @@ typedef struct
     
     vm_addr_t pc;  // program counter
     vm_addr_t sp;  // stack pointer
+    
+    jmp_buf eh;
+    const char* error;
 } vm_t;
 
 

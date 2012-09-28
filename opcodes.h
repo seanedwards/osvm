@@ -19,14 +19,24 @@ typedef enum
 	OP_RLOADD = 11, // Load register from memory direct addressing: Rn <- M(XX)
 
 	OP_ADDI = 12, // Add accumulator immediate: AC <- AC + XXXX
-	OP_SUBI = 13, // Subtract accumulator immediate: AC <- AC - XXXX
 	OP_ADDR = 14, // Add contents of register to accumulator: AC <- AC + Rn
-	OP_SUBR = 15, // Subtract contents of register from accumulator: AC <- AC - Rn
-	
 	OP_ADDMR = 16, // Add accumulator register addressing: AC <- AC + M(Pn)
 	OP_ADDMD = 17, // Add accumulator direct addressing: AC <- AC + M(XX)
+
+	OP_SUBI = 13, // Subtract accumulator immediate: AC <- AC - XXXX
+	OP_SUBR = 15, // Subtract contents of register from accumulator: AC <- AC - Rn	
 	OP_SUBMR = 18, // Subtract from accumulator register addressing: AC <- AC - M(Pn)
 	OP_SUBMD = 19, // Subtract from accumulator direct addressing: AC <- AC - M(XX)
+    
+    OP_MULI = 50, // Multiply accumulator immediate: AC <- AC * XXXX
+	OP_MULR = 51, // Multiply contents of register with accumulator: AC <- AC * Rn
+    OP_MULMR = 52, // Multiply accumulator immediate: AC <- AC * M(Px)
+	OP_MULMD = 53, // Multiply contents of register with accumulator: AC <- AC * M(XX)
+    
+	OP_DIVI = 54, // Divide accumulator immediate: AC <- AC / XXXX
+	OP_DIVR = 55, // Divide contents of register from accumulator: AC <- AC / Rn
+	OP_DIVMR = 56, // Divide accumulator immediate: AC <- AC / M(Px)
+	OP_DIVMD = 57, // Divide contents of register from accumulator: AC <- AC / M(XX)
 
 	OP_CMPEQR = 20, // Compare equal register: if AC == Rn then PSW[0] = 1 else PSW[0] = 0
 	OP_CMPLTR = 21, // Compare less register : if AC <  Rn then PSW[0] = 1 else PSW[0] = 0
@@ -38,6 +48,10 @@ typedef enum
 	OP_BRU = 26, // Branch unconditional: PC = XX
 
 	OP_HALT = 27,
+    
+    // Probable future opcodes
+    OP_RAMOVE, // Copy the value of Rx to AC: Rx <- AC
+    OP_ARMOVE, // Copy the value of AC to RX: AC <- Rx
 
 	// Extensions
     OP_PRINTCHR = 96, // Print character contents of accumulator

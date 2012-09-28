@@ -79,6 +79,7 @@
 		AF5D8BA3160BCC2000F249D3 /* fibonacci.pasm */ = {isa = PBXFileReference; lastKnownFileType = text; name = fibonacci.pasm; path = asm/programs/fibonacci.pasm; sourceTree = SOURCE_ROOT; };
 		AF61256A160A2AD000CE0F16 /* parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parser.c; sourceTree = SOURCE_ROOT; };
 		AF61256D160A2ADE00CE0F16 /* parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parser.h; sourceTree = SOURCE_ROOT; };
+		AFC6D2C116109DE600DBB3A7 /* square.pasm */ = {isa = PBXFileReference; lastKnownFileType = text; name = square.pasm; path = asm/programs/square.pasm; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +221,7 @@
 		AF5D8BA1160BCA5200F249D3 /* programs */ = {
 			isa = PBXGroup;
 			children = (
+				AFC6D2C116109DE600DBB3A7 /* square.pasm */,
 				AF5D8BA3160BCC2000F249D3 /* fibonacci.pasm */,
 			);
 			name = programs;
