@@ -16,7 +16,7 @@ uint8_t parse_2digit(const char* str)
 {
     uint8_t ret = 0;
     if (isdigit(str[0])) ret += (str[0] - '0') * 10;
-    if (isdigit(str[0])) ret += (str[1] - '0') * 1;
+    if (isdigit(str[1])) ret += (str[1] - '0') * 1;
     return ret;
 }
 
