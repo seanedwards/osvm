@@ -21,34 +21,34 @@ def op_printchr(line): return "969999"
 def op_printnum(line): return "979999"
 def op_dbgbrk(line): return "999999"
 
-def op_lpi(line): return "00%02d%02d" % (resolve(line[1]), resolve(line[2]))
-def op_api(line): return "01%02d%02d" % (resolve(line[1]), resolve(line[2]))
-def op_api(line): return "02%02d%02d" % (resolve(line[1]), resolve(line[2]))
+def op_lpi(line): return "00P%01d%02d" % (resolve(line[1]), resolve(line[2]))
+def op_api(line): return "01P%01d%02d" % (resolve(line[1]), resolve(line[2]))
+def op_api(line): return "02P%01d%02d" % (resolve(line[1]), resolve(line[2]))
 
 def op_acloadi(line): return "03%04d" % resolve(line[1])
-def op_acloadr(line): return "04%02d99" % resolve(line[1])
+def op_acloadr(line): return "04P%01d99" % resolve(line[1])
 def op_acloadd(line): return "05%02d99" % resolve(line[1])
-def op_acstorr(line): return "06%02d99" % resolve(line[1])
+def op_acstorr(line): return "06P%01d99" % resolve(line[1])
 def op_acstord(line): return "07%02d99" % resolve(line[1])
 
-def op_rstorr(line): return "08%02d%02d" % (resolve(line[1]), resolve(line[2]))
-def op_rstord(line): return "09%02d%02d" % (resolve(line[1]), resolve(line[2]))
-def op_rloadr(line): return "10%02d%02d" % (resolve(line[1]), resolve(line[2]))
-def op_rloadd(line): return "11%02d%02d" % (resolve(line[1]), resolve(line[2]))
+def op_rstorr(line): return "08R%01dP%01d" % (resolve(line[1]), resolve(line[2]))
+def op_rstord(line): return "09R%01d%02d" % (resolve(line[1]), resolve(line[2]))
+def op_rloadr(line): return "10R%01dP%01d" % (resolve(line[1]), resolve(line[2]))
+def op_rloadd(line): return "11R%01d%02d" % (resolve(line[1]), resolve(line[2]))
 
 def op_addi(line): return "12%04d" % resolve(line[1])
 def op_subi(line): return "13%04d" % resolve(line[1])
-def op_addr(line): return "14%02d99" % resolve(line[1])
-def op_subr(line): return "15%02d99" % resolve(line[1])
+def op_addr(line): return "14R%01d99" % resolve(line[1])
+def op_subr(line): return "15R%01d99" % resolve(line[1])
 
-def op_addmr(line): return "16%02d99" % resolve(line[1])
+def op_addmr(line): return "16P%01d99" % resolve(line[1])
 def op_addmd(line): return "17%02d99" % resolve(line[1])
-def op_submr(line): return "18%02d99" % resolve(line[1])
+def op_submr(line): return "18P%01d99" % resolve(line[1])
 def op_submd(line): return "19%02d99" % resolve(line[1])
 
-def op_cmpeqr(line): return "20%02d99" % resolve(line[1])
+def op_cmpeqr(line): return "20R%01d99" % resolve(line[1])
 def op_cmpeqi(line): return "22%04d" % resolve(line[1])
-def op_cmpltr(line): return "21%02d99" % resolve(line[1])
+def op_cmpltr(line): return "21R%01d99" % resolve(line[1])
 def op_cmplti(line): return "23%04d" % resolve(line[1])
 
 def op_brc(line): return "24%02d99" % resolve(line[1])
