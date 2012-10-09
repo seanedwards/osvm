@@ -86,9 +86,10 @@ for fname in args.input:
         func = locals()["op_%s" % linesegs[0].lower()]
         
         labeldef = labellines.get(addr, "")
-        if labeldef:
-            print "# %s" % labeldef
-        print "%s # %s" % (func(linesegs), line)
+    #   if labeldef:
+    #    print "# %s" % labeldef
+    #    print "%s # %s" % (func(linesegs), line)
+        print func(linesegs)
 
         addr = addr + 1
 
