@@ -47,7 +47,14 @@ typedef enum
     OP_BRF = 25, // Branch false conditional: if PSW[0] = F then PC = XX
 	OP_BRU = 26, // Branch unconditional: PC = XX
 
-	OP_HALT = 27,
+    OP_HALT = 32,
+	OP_INT = 27, // syscall(XX)
+    
+    OP_PUSH = 28, // M(SP++) <- R(XX)
+    OP_POP = 29, // R(XX) <- M(SP--)
+    
+    OP_LAR = 30, // AC <- R(XX)
+    OP_SAR = 31, // R(XX) <- AC
     
     // Probable future opcodes
     OP_RAMOVE, // Copy the value of Rx to AC: Rx <- AC

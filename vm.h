@@ -49,6 +49,7 @@ typedef struct
     
     vm_addr_t pc;  // program counter
     vm_addr_t sp;  // stack pointer
+    vm_addr_t op;  // offset register
     
     jmp_buf eh;
     const char* error;

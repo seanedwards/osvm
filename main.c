@@ -18,7 +18,7 @@ int main(int argc, char** argv)
     int opt;
     parse_type parser = PARSE_PBRAIN;
     
-    int ram_size = 100;
+    int ram_size = 150;
     vm_flags_t flags = 0;
     
     const char* filename = 0;

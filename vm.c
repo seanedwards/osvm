@@ -29,8 +29,8 @@ void print_vm(vm_t* vm) {
     printf(" }\n");
 }
 
-void print_ram(vm_t* vm) {
-    for (size_t i = 0; i < vm->ram_size; ++i) {
+void print_ram(vm_t* vm, size_t start, size_t end) {
+    for (size_t i = start; i < end; ++i) {
         if (i % 0x0A == 0) printf("[A:%03d]", (uint16_t)i);
         if (i % 0x05 == 0) printf(" ");
         printf("%02X%04X ", (uint8_t)vm->ram[i].unused, vm->ram[i].data);
@@ -60,6 +60,11 @@ vm_word_t* vm_ram(vm_t* vm, uint16_t addr) {
     return &vm->ram[addr];
 }
 
+vm_word_t* vm_stack(vm_t* vm, size_t offset) {
+    PRECONDITION(vm, offset < 50, "Stack offset out of range.");
+    return vm_ram(vm, (vm->sp + vm->op) - offset);
+}
+
 /***********************************************************
  ************************ Misc Opcodes *********************
  ***********************************************************/
@@ -67,6 +72,16 @@ void i_noop(vm_t* vm) { } // OP_NOOP = 98
 
 void i_halt(vm_t* vm) { // OP_HALT = 27
     vm->flags &= ~VM_RUN;
+}
+
+void i_syscall(vm_t* vm) { // OP_INT
+    switch(vm->ir.op1) {
+        case 0:
+            print_ram(vm, vm_stack(vm, 1)->data, vm_stack(vm, 2)->data);
+            break;
+        default:
+            PRECONDITION(vm, 0, "Invalid or unimplemented syscall.");
+    }
 }
 
 
@@ -134,6 +149,14 @@ void i_ramove(vm_t* vm) { // OP_RAMOVE
 }
 
 void i_armove(vm_t* vm) { // OP_ARMOVE
+    vm_dreg(vm, vm->ir.op1)->data = vm->acc.data;
+}
+
+void i_lar(vm_t* vm) { // OP_LAR
+    vm->acc.data = vm_dreg(vm, vm->ir.op1)->data;
+}
+
+void i_sar(vm_t* vm) { // OP_SAR
     vm_dreg(vm, vm->ir.op1)->data = vm->acc.data;
 }
 
@@ -259,6 +282,17 @@ void i_bru(vm_t* vm) { // OP_BRU = 26
 }
 
 
+/***********************************************************
+ *********************** Stack Opcodes *********************
+ ***********************************************************/
+void i_push(vm_t* vm) { // OP_PUSH
+    vm_ram(vm, vm->sp + vm->op++)->data = vm_dreg(vm, vm->ir.op1)->data;
+}
+
+void i_pop(vm_t* vm) { // OP_POP
+    vm_dreg(vm, vm->ir.op1)->data = vm_ram(vm, vm->sp + vm->op--)->data;
+}
+
 
 /***********************************************************
  ********************* Extension Opcodes *******************
@@ -290,6 +324,7 @@ void vm_setup_opcodes() {
     // Misc opcodes
     vm_opcodes[OP_NOOP] = &i_noop;
     vm_opcodes[OP_HALT] = &i_halt;
+    vm_opcodes[OP_INT] = &i_syscall;
     
     // Accumulator opcodes
     vm_opcodes[OP_ACLOADI] = &i_acloadi;
@@ -311,6 +346,9 @@ void vm_setup_opcodes() {
     
     vm_opcodes[OP_RAMOVE] = &i_ramove;
     vm_opcodes[OP_ARMOVE] = &i_armove;
+    
+    vm_opcodes[OP_LAR] = &i_lar;
+    vm_opcodes[OP_SAR] = &i_sar;
     
     // Arithmetic opcodes
     vm_opcodes[OP_ADDI] = &i_addi;
@@ -344,6 +382,10 @@ void vm_setup_opcodes() {
     vm_opcodes[OP_BRF] = &i_brf;
     vm_opcodes[OP_BRU] = &i_bru;
     
+    // Stack opcodes
+    vm_opcodes[OP_PUSH] = &i_push;
+    vm_opcodes[OP_POP] = &i_pop;
+    
     // Extension opcodes
     vm_opcodes[OP_PRINTCHR] = &i_printchr;
     vm_opcodes[OP_PRINTNUM] = &i_printnum;
@@ -363,6 +405,9 @@ vm_t* vm_init(uint32_t ram_size)
     
     vm->ram_size = ram_size;
     vm->ram = (vm_word_t*)calloc(sizeof(vm_word_t), vm->ram_size);
+    memset(vm->ram, 0, vm->ram_size);
+    
+    vm->sp = vm->ram_size - 50;
     
 	return vm;
 }
@@ -396,25 +441,20 @@ void vm_run(vm_t* vm)
 	while ((vm->flags & VM_RUN) != 0) {
         if (!setjmp(vm->eh)) {
             vm_fetch(vm);
-            if (vm->flags & VM_ERROR) {
-                fprintf(stderr, "Error during fetch step. Cannot continue.\n");
-                vm->flags &= ~VM_RUN;
-                return;
-            }
-        } else {
+        }
+        else {
+            fprintf(stderr, "Error during fetch step: %s. Cannot continue.\n", vm->error);
             vm->flags |= VM_STEPMODE | VM_ERROR;
+            vm->flags &= ~VM_RUN;
         }
         
         if (!setjmp(vm->eh)) {
             vm_exec(vm);
-            if (vm->flags & VM_ERROR) {
-                fprintf(stderr, "Error during execute step. Cannot continue.\n");
-                vm->flags &= ~VM_RUN;
-                return;
-            }
         }
         else {
+            fprintf(stderr, "Error during execute step: %s. Cannot continue.\n", vm->error);
             vm->flags |= VM_STEPMODE | VM_ERROR;
+            vm->flags &= ~VM_RUN;
         }
         
         if((vm->flags & (VM_DBGMODE|VM_STEPMODE)) != 0) {
@@ -445,7 +485,7 @@ void vm_run(vm_t* vm)
                         printf("VM State:\n");
                         print_vm(vm);
                         printf("Memdump: \n");
-                        print_ram(vm);
+                        print_ram(vm, 0, vm->ram_size);
                         break;
                         
                     default:
@@ -471,7 +511,7 @@ void vm_run(vm_t* vm)
     if ((vm->flags & (VM_DBGMODE|VM_STEPMODE)) != 0) {
         printf("Execution complete. Final VM state: \n");
         print_vm(vm);
-        print_ram(vm);
+        print_ram(vm, 0, vm->ram_size);
     }
 }
 
