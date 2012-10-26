@@ -78,25 +78,22 @@ int main(int argc, char** argv)
         exit(EXIT_FAILURE);
     }
     
-    char txtbuf[2048];
-	size_t flen = fread(txtbuf, sizeof(char), sizeof(txtbuf), f);
-	fclose(f);
-    
 	vm_t* vm;
 	vm = vm_init(ram_size);
     vm->flags = flags;
     
     switch (parser) {
         case PARSE_PBRAIN:
-            parse_pbrain(vm, txtbuf, flen);
+            parse_pbrain(vm, f);
             break;
         case PARSE_ASM:
-            parse_asm(vm, txtbuf, flen);
+            parse_asm(vm, f);
             break;
         case PARSE_BINARY:
-            parse_binary(vm, txtbuf, flen);
+            parse_binary(vm, f);
             break;
     }
+	fclose(f);
 
 	vm_run(vm);
 

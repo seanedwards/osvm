@@ -9,7 +9,7 @@ opcode_t* vm_opcodes = 0;
 void print_vm(vm_t* vm) {
     printf("[%02d %02d %02d] -> ", vm->ir.opc, vm->ir.op1, vm->ir.op2);
     
-    printf("acc: %04d pc: %02d sp:%02d psw: %04d ", vm->acc.data, vm->pc, vm->sp, vm->psw.data);
+    printf("acc: %04d pc: %02d sp: %02d op: %02d psw: %04d ", vm->acc.data, vm->pc, vm->sp, vm->op, vm->psw.data);
     
     printf("Dx: {");
     size_t i = 0;
@@ -61,8 +61,19 @@ vm_word_t* vm_ram(vm_t* vm, uint16_t addr) {
 }
 
 vm_word_t* vm_stack(vm_t* vm, size_t offset) {
-    PRECONDITION(vm, offset < 50, "Stack offset out of range.");
+    PRECONDITION(vm, offset < 50, "Stack offset out of range");
+    PRECONDITION(vm, offset <= vm->op, "Invalid stack offset");
     return vm_ram(vm, (vm->sp + vm->op) - offset);
+}
+
+void vm_push(vm_t* vm, vm_word_t* data) {
+    PRECONDITION(vm, (vm->sp + vm->op) < vm->ram_size, "VM stack overflow");
+    vm_ram(vm, vm->sp + vm->op++)->data = data->data;
+}
+
+vm_word_t* vm_pop(vm_t* vm) {
+    PRECONDITION(vm, vm->op > 0, "Pop attempted on empty stack");
+    return vm_ram(vm, vm->sp + vm->op--);
 }
 
 /***********************************************************
@@ -77,7 +88,13 @@ void i_halt(vm_t* vm) { // OP_HALT = 27
 void i_syscall(vm_t* vm) { // OP_INT
     switch(vm->ir.op1) {
         case 0:
-            print_ram(vm, vm_stack(vm, 1)->data, vm_stack(vm, 2)->data);
+            for (int i = vm_stack(vm, 1)->data; i <= vm_stack(vm, 2)->data; ++i) {
+                printf("[%03d] %02X%04X\n", i, vm_ram(vm, i)->unused, vm_ram(vm, i)->data);
+            }
+            
+            vm_pop(vm); // Pop begin address
+            vm_pop(vm); // Pop end address
+            
             break;
         default:
             PRECONDITION(vm, 0, "Invalid or unimplemented syscall.");

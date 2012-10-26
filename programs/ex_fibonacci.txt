@@ -1,0 +1,25 @@
+11R026 # load R0 with contents of memory location 26
+00P027 # load P0 with address 27
+00P128 # load P1 with address 28
+00P229 # load P2 with address 29
+00P330 # load P3 with address 30
+03XX02 # load ACC 02 (immediate)
+06P0xx # store ACC Memory address 27 (27 is address of i)
+030000 # load ACC 00 (immediate)
+06P1xx # store ACC in memory locations 28 (fibonacci 0)
+03xx01 # load ACC 01 (immediate)
+06P2xx # store Acc into address 28 (fibonacci 1)
+04p0XX # load ACC with contents of 27 (holds i) //beginning of Loop
+21R0xx # if (ACC < contents R) PSW[0] = 'T' else = 'F'
+2425xx # if (not true) jump to end of program (25)
+04P1xx # load ACC contents of address P1 //fib[i-2]
+16P2xx # Add contents of address P2 // fib[i-1]
+06P3xx # This is new fibonacci number
+01P101 # increment pointer register 1
+01P201 # increment pointer register 2
+01P301 # increment pointer register 3
+04P000 # load ACC with contents of P0 (remember that this is i)
+120001 # add 1 to ACC
+06P000 # store new value of i
+261100 # jump unconditional to beginning of loop (address 11)
+270000 # HALT

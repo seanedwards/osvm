@@ -43,12 +43,15 @@ JMP :loop
 
 :halt
 DBGBRK
-ACLOADR 2
-PRINTNUM
-ACLOADI 10
-PRINTCHR
-ACLOADR 0
-PRINTNUM
-ACLOADI 10
-PRINTCHR
+
+ACLOADI 42 # Push end address
+SAR 2
+PUSH 2
+
+ACLOADI 41 # Push begin address
+SAR 2
+PUSH 2
+
+INT 0 # Call print (pops end and begin from stack)
+
 HALT

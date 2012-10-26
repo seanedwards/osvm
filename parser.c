@@ -12,6 +12,15 @@
 
 #include "vm.h"
 
+const char* mnemonics[100];
+
+typedef struct {
+    vm_addr_t offset;
+    const char* label;
+} label_t;
+
+label_t* labels;
+
 uint8_t parse_2digit(const char* str)
 {
     uint8_t ret = 0;
@@ -52,25 +61,124 @@ void parse_pbrain_instruction(vm_instruction_t* inst, const char* str)
     }
 }
 
-void parse_pbrain(vm_t* vm, const char* src, size_t len)
+void parse_pbrain(vm_t* vm, FILE* f)
 {
     size_t linenum = 1;
     
     size_t inst = 0;
-    for (size_t i = 0; i < len; ++i) {
-        if (src[i] != '#') { // Parse opcode.
-            parse_pbrain_instruction((vm_instruction_t*)&vm->ram[inst], &src[i]);
-            i += 6;
+    char buf[512];
+    while (fgets(buf, 512, f)) {
+        if (strlen(buf) > 6 && buf[0] != '#') {
+            parse_pbrain_instruction((vm_instruction_t*)&vm->ram[inst], buf);
             ++inst;
         }
-        
-        while (i < len && src[i] != '\n') ++i; // Fast forward over the rest of the line.
         ++linenum;
     }
 }
 
-void parse_asm(const char* src, size_t len, void* ram)
+void init_asm() {
+    memset(mnemonics, 0, sizeof(const char*) * sizeof(mnemonics));
+    labels = NULL;
+    
+    // Misc opcodes
+    mnemonics[OP_NOOP] = "NOOP";
+    mnemonics[OP_HALT] = "HALT";
+    mnemonics[OP_INT] = "INT";
+    
+    // Accumulator opcodes
+    mnemonics[OP_ACLOADI] = "ACLOADI";
+    mnemonics[OP_ACLOADR] = "ACLOADR";
+    mnemonics[OP_ACLOADD] = "ACLOADD";
+    mnemonics[OP_ACSTORR] = "ACSTORR";
+    mnemonics[OP_ACSTORD] = "ACSTORD";
+    
+    // Ptr register opcodes
+    mnemonics[OP_LPI] = "LPI";
+    mnemonics[OP_API] = "API";
+    mnemonics[OP_SPI] = "SPI";
+    
+    // Data register opcodes
+    mnemonics[OP_RSTORR] = "RSTORR";
+    mnemonics[OP_RSTORD] = "RSTORD";
+    mnemonics[OP_RLOADR] = "RLOADR";
+    mnemonics[OP_RLOADD] = "RLOADD";
+    
+    mnemonics[OP_RAMOVE] = "RAMOVE";
+    mnemonics[OP_ARMOVE] = "ARMOVE";
+    
+    mnemonics[OP_LAR] = "LAR";
+    mnemonics[OP_SAR] = "SAR";
+    
+    // Arithmetic opcodes
+    mnemonics[OP_ADDI] = "ADDI";
+    mnemonics[OP_ADDR] = "ADDR";
+    mnemonics[OP_ADDMR] = "ADDMR";
+    mnemonics[OP_ADDMD] = "ADDMD";
+    
+    mnemonics[OP_SUBI] = "SUBI";
+    mnemonics[OP_SUBR] = "SUBR";
+    mnemonics[OP_SUBMR] = "SUBMR";
+    mnemonics[OP_SUBMD] = "SUBMD";
+    
+    mnemonics[OP_MULI] = "MULI";
+    mnemonics[OP_MULR] = "MULR";
+    mnemonics[OP_MULMR] = "MULMR";
+    mnemonics[OP_MULMD] = "MULMD";
+    
+    mnemonics[OP_DIVI] = "DIVI";
+    mnemonics[OP_DIVR] = "DIVR";
+    mnemonics[OP_DIVMR] = "DIVMR";
+    mnemonics[OP_DIVMD] = "DIVMD";
+    
+    // Comparison opcodes
+    mnemonics[OP_CMPEQR] = "CMPEQR";
+    mnemonics[OP_CMPEQI] = "CMPEQI";
+    mnemonics[OP_CMPLTR] = "CMPLTR";
+    mnemonics[OP_CMPLTI] = "CMPLTI";
+    
+    // Branch opcodes
+    mnemonics[OP_BRC] = "BRC";
+    mnemonics[OP_BRF] = "BRF";
+    mnemonics[OP_BRU] = "BRU";
+    
+    // Stack opcodes
+    mnemonics[OP_PUSH] = "PUSH";
+    mnemonics[OP_POP] = "POP";
+    
+    // Extension opcodes
+    mnemonics[OP_PRINTCHR] = "PRINTCHR";
+    mnemonics[OP_PRINTNUM] = "PRINTNUM";
+    mnemonics[OP_DBGBRK] = "DBGBRK";
+}
+
+op parse_opcode(const char* mnemonic) {
+    for (int i = 0; i < 100; ++i) {
+        if (mnemonics[i] == NULL) continue;
+        if (strcmp(mnemonic, mnemonics[i]) == 0) return i;
+    }
+    return -1;
+    // Error.
+}
+
+void parse_asm(vm_t* vm, FILE* f)
 {
+    static const char* tokens = " \t";
+    static char initialized = 0;
+    if (initialized == 0) {
+        init_asm();
+        initialized = 1;
+    }
+    
+    char buf[512];
+    while (fgets(buf, 512, f)) {
+        char* tok = strtok(buf, tokens);
+        while (tok) {
+            if (tok[0] == '#') break; // Skip everything after comments.
+            
+            tok = strtok(NULL, tokens);
+        }
+    }
+    
     printf("ASM not yet implemented.");
 }
 
@@ -78,7 +186,7 @@ void parse_asm(const char* src, size_t len, void* ram)
 #ifndef max
 #define max( a, b ) ( ((a) > (b)) ? (a) : (b) )
 #endif
-void parse_binary(vm_t* vm, const char* src, size_t len)
+void parse_binary(vm_t* vm, FILE* f)
 {
-    memcpy(vm->ram, src, max(len, vm->ram_size * sizeof(vm_word_t)));
+    //memcpy(vm->ram, src, max(len, vm->ram_size * sizeof(vm_word_t)));
 }

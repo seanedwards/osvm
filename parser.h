@@ -10,9 +10,10 @@
 #define vm_parser_h
 #include "vm.h"
 #include "string.h"
+#include <stdio.h>
 
-void parse_pbrain(vm_t* vm, const char* src, size_t len);
-void parse_asm(vm_t* vm, const char* src, size_t len);
-void parse_binary(vm_t* vm, const char* src, size_t len);
+void parse_pbrain(vm_t* vm, FILE* f);
+void parse_asm(vm_t* vm, FILE* f);
+void parse_binary(vm_t* vm, FILE* f);
 
 #endif
