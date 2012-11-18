@@ -33,6 +33,7 @@ package:
 	@mkdir dist
 	@mkdir dist/obj
 	@cp Makefile dist
+	@cp test.sh dist
 	@cp *.c dist
 	@cp *.h dist
 	@cp -R programs dist

@@ -18,19 +18,18 @@ int main(int argc, char** argv)
     int opt;
     parse_type parser = PARSE_PBRAIN;
     
-    int ram_size = 150;
+    size_t ram_size = 150;
+    size_t timeslice_size = 10;
     vm_flags_t flags = 0;
     
-    const char* filename = 0;
-
-    
-    while ((opt = getopt(argc, argv, "hdspabi:r:")) != -1) {
+    while ((opt = getopt(argc, argv, "hdspabr:t:")) != -1) {
         switch (opt) {
-            case 'i':
-                filename = optarg;
+            case 't':
+                timeslice_size = atoi(optarg);
                 break;
             case 'r':
                 ram_size = atoi(optarg);
+                break;
             case 'd':
                 flags |= VM_DBGMODE;
                 break;
@@ -50,9 +49,9 @@ int main(int argc, char** argv)
                 
             case 'h':
             default: /* '?' */
-                fprintf(stderr, "Usage: %s [-ds] [-pab] -i <file>\n"
-                        "  -i         Specify input program.\n"
-                        "  -r         Size of RAM in words (default 100).\n"
+                fprintf(stderr, "Usage: %s [-ds] [-pab] [-r size] [-t count] <program> [...]\n"
+                        "  -r         Size of RAM allocated for each process in words (default 150).\n"
+                        "  -t         Size of timeslice given to each program by the scheduler.\n"
                         "\n"
                         "Debugging options:\n"
                         "  -d         Run program with debug output.\n"
@@ -65,35 +64,37 @@ int main(int argc, char** argv)
                 return 0;
         }
     }
-
-    if (filename == 0) {
-        fprintf(stderr, "Must specify an input file.\n");
-        exit(EXIT_FAILURE);
-    }
     
-	f = fopen(filename, "r");
+    char** processes = &argv[optind];
+    size_t process_count = argc - optind;
     
-    if (f == 0) {
-        fprintf(stderr, "Could not open file '%s'.", filename);
-        exit(EXIT_FAILURE);
+    if (process_count == 0) {
+        fprintf(stderr, "No processes specified. Use %s -h for usage info.", argv[0]);
+        return 0;
     }
     
 	vm_t* vm;
-	vm = vm_init(ram_size);
+	vm = vm_init((uint32_t)(ram_size * process_count));
+    vm->timeslice_size = (uint32_t)timeslice_size;
     vm->flags = flags;
     
-    switch (parser) {
-        case PARSE_PBRAIN:
-            parse_pbrain(vm, f);
-            break;
-        case PARSE_ASM:
-            parse_asm(vm, f);
-            break;
-        case PARSE_BINARY:
-            parse_binary(vm, f);
-            break;
+    for (size_t proci = 0; proci < process_count; ++proci) {
+        f = fopen(processes[proci], "r");
+        
+        switch (parser) {
+            case PARSE_PBRAIN:
+                parse_pbrain(vm, f, ram_size * proci);
+                vm_spawn(vm, ram_size * proci);
+                break;
+            case PARSE_ASM:
+                parse_asm(vm, f, ram_size * proci);
+                break;
+            case PARSE_BINARY:
+                parse_binary(vm, f, ram_size * proci);
+                break;
+        }
+        fclose(f);
     }
-	fclose(f);
 
 	vm_run(vm);
 

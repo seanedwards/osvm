@@ -61,11 +61,11 @@ void parse_pbrain_instruction(vm_instruction_t* inst, const char* str)
     }
 }
 
-void parse_pbrain(vm_t* vm, FILE* f)
+void parse_pbrain(vm_t* vm, FILE* f, vm_addr_t base_addr)
 {
     size_t linenum = 1;
     
-    size_t inst = 0;
+    size_t inst = base_addr;
     char buf[512];
     while (fgets(buf, 512, f)) {
         if (strlen(buf) > 6 && buf[0] != '#') {
@@ -77,7 +77,7 @@ void parse_pbrain(vm_t* vm, FILE* f)
 }
 
 void init_asm() {
-    memset(mnemonics, 0, sizeof(const char*) * sizeof(mnemonics));
+    memset(mnemonics, 0, sizeof(const char*) * 100);
     labels = NULL;
     
     // Misc opcodes
@@ -102,9 +102,6 @@ void init_asm() {
     mnemonics[OP_RSTORD] = "RSTORD";
     mnemonics[OP_RLOADR] = "RLOADR";
     mnemonics[OP_RLOADD] = "RLOADD";
-    
-    mnemonics[OP_RAMOVE] = "RAMOVE";
-    mnemonics[OP_ARMOVE] = "ARMOVE";
     
     mnemonics[OP_LAR] = "LAR";
     mnemonics[OP_SAR] = "SAR";
@@ -160,7 +157,7 @@ op parse_opcode(const char* mnemonic) {
     // Error.
 }
 
-void parse_asm(vm_t* vm, FILE* f)
+void parse_asm(vm_t* vm, FILE* f, vm_addr_t base_addr)
 {
     static const char* tokens = " \t";
     static char initialized = 0;
@@ -186,7 +183,7 @@ void parse_asm(vm_t* vm, FILE* f)
 #ifndef max
 #define max( a, b ) ( ((a) > (b)) ? (a) : (b) )
 #endif
-void parse_binary(vm_t* vm, FILE* f)
+void parse_binary(vm_t* vm, FILE* f, vm_addr_t base_addr)
 {
     //memcpy(vm->ram, src, max(len, vm->ram_size * sizeof(vm_word_t)));
 }

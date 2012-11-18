@@ -55,10 +55,6 @@ typedef enum
     
     OP_LAR = 30, // AC <- R(XX)
     OP_SAR = 31, // R(XX) <- AC
-    
-    // Probable future opcodes
-    OP_RAMOVE, // Copy the value of Rx to AC: Rx <- AC
-    OP_ARMOVE, // Copy the value of AC to RX: AC <- Rx
 
 	// Extensions
     OP_PRINTCHR = 96, // Print character contents of accumulator

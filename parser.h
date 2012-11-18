@@ -12,8 +12,8 @@
 #include "string.h"
 #include <stdio.h>
 
-void parse_pbrain(vm_t* vm, FILE* f);
-void parse_asm(vm_t* vm, FILE* f);
-void parse_binary(vm_t* vm, FILE* f);
+void parse_pbrain(vm_t* vm, FILE* f, vm_addr_t base_addr);
+void parse_asm(vm_t* vm, FILE* f, vm_addr_t base_addr);
+void parse_binary(vm_t* vm, FILE* f, vm_addr_t base_addr);
 
 #endif

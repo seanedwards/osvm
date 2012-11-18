@@ -314,7 +314,7 @@
 		AF29E01A16091FE200888BF7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Sean Edwards";
 			};
 			buildConfigurationList = AF29E01D16091FE200888BF7 /* Build configuration list for PBXProject "vm" */;
@@ -589,6 +589,7 @@
 		AF5D8B9D160BC71000F249D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUGGING_SYMBOLS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -601,6 +602,7 @@
 		AF5D8B9E160BC71000F249D3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
