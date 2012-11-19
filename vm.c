@@ -134,7 +134,7 @@ void i_syscall(vm_t* vm) { /* OP_INT */
 /***********************************************************
  ******************* Accumulator Opcodes *******************
  ***********************************************************/
-void i_acloadi(vm_t* vm) { /* OP_ACLOADI = 3 */ vm_acc(vm)->data = ((vm_word_t*)&vm->ir)->data; }
+void i_acloadi(vm_t* vm) { /* OP_ACLOADI = 3 */ vm_acc(vm)->data = vm->ir.data; }
 void i_acloadr(vm_t* vm) { /* OP_ACLOADR = 4 */ vm_acc(vm)->data = vm_ram(vm, *vm_preg(vm, vm->ir.op1))->data; }
 void i_acloadd(vm_t* vm) { /* OP_ACLOADD = 5 */ vm_acc(vm)->data = vm_ram(vm, vm->ir.op1)->data; }
 void i_acstorr(vm_t* vm) { /* OP_ACSTORR = 6 */ vm_ram(vm, *vm_preg(vm, vm->ir.op1))->data = vm_acc(vm)->data; }
@@ -165,25 +165,25 @@ void i_sar(vm_t* vm) { /* OP_SAR */ vm_dreg(vm, vm->ir.op1)->data = vm_acc(vm)->
 /***********************************************************
  ******************** Arithmetic Opcodes *******************
  ***********************************************************/
-void i_addi(vm_t* vm) { /* OP_ADDI = 12 */ vm_acc(vm)->data += ((vm_word_t*)&vm->ir)->data; }
+void i_addi(vm_t* vm) { /* OP_ADDI = 12 */ vm_acc(vm)->data += vm->ir.data; }
 void i_addr(vm_t* vm) { /* OP_ADDR = 14 */ vm_acc(vm)->data += vm_dreg(vm, vm->ir.op1)->data; }
 void i_addmr(vm_t* vm) { /* OP_ADDMR = 16 */ vm_acc(vm)->data += vm_ram(vm, *vm_preg(vm, vm->ir.op1))->data; }
 void i_addmd(vm_t* vm) { /* OP_ADDMD = 17 */ vm_acc(vm)->data += vm_ram(vm, vm->ir.op1)->data; }
 
 
-void i_subi(vm_t* vm) { /* OP_SUBI = 13 */ vm_acc(vm)->data -= ((vm_word_t*)&vm->ir)->data; }
+void i_subi(vm_t* vm) { /* OP_SUBI = 13 */ vm_acc(vm)->data -= vm->ir.data; }
 void i_subr(vm_t* vm) { /* OP_SUBR = 15 */ vm_acc(vm)->data -= vm_dreg(vm, vm->ir.op1)->data; }
 void i_submr(vm_t* vm) { /* OP_SUBMR = 18 */ vm_acc(vm)->data += vm_ram(vm, *vm_preg(vm, vm->ir.op1))->data; }
 void i_submd(vm_t* vm) { /* OP_SUBMD = 19 */ vm_acc(vm)->data += vm_ram(vm, vm->ir.op1)->data; }
 
 
-void i_muli(vm_t* vm) { /* OP_MULI */ vm_acc(vm)->data *= ((vm_word_t*)&vm->ir)->data; }
+void i_muli(vm_t* vm) { /* OP_MULI */ vm_acc(vm)->data *= vm->ir.data; }
 void i_mulr(vm_t* vm) { /* OP_MULR */ vm_acc(vm)->data *= vm_dreg(vm, vm->ir.op1)->data; }
 void i_mulmr(vm_t* vm) { /* OP_MULMR */ vm_acc(vm)->data *= vm_ram(vm, *vm_preg(vm, vm->ir.op1))->data;}
 void i_mulmd(vm_t* vm) { /* OP_MULMD */ vm_acc(vm)->data *= vm_ram(vm, vm->ir.op1)->data; }
 
 
-void i_divi(vm_t* vm) { /* OP_DIVI */ vm_acc(vm)->data /= ((vm_word_t*)&vm->ir)->data; }
+void i_divi(vm_t* vm) { /* OP_DIVI */ vm_acc(vm)->data /= vm->ir.data; }
 void i_divr(vm_t* vm) { /* OP_DIVR */ vm_acc(vm)->data /= vm_dreg(vm, vm->ir.op1)->data; }
 void i_divmr(vm_t* vm) { /* OP_DIVMR */ vm_acc(vm)->data /= vm_ram(vm, *vm_preg(vm, vm->ir.op1))->data; }
 void i_divmd(vm_t* vm) { /* OP_DIVMD */ vm_acc(vm)->data /= vm_ram(vm, vm->ir.op1)->data; }
@@ -207,13 +207,13 @@ void i_cmpltr(vm_t* vm) { // OP_CMPLTR = 21
 
 void i_cmpeqi(vm_t* vm) { // OP_CMPEQI = 22
     vm_psw(vm)->data &= ~0x01;
-    if (vm_acc(vm)->data == ((vm_word_t*)&vm->ir)->data)
+    if (vm_acc(vm)->data == vm->ir.data)
         vm_psw(vm)->data |= 0x01;
 }
 
 void i_cmplti(vm_t* vm) { // OP_CMPLTI = 23
     vm_psw(vm)->data &= ~0x01;
-    if (vm_acc(vm)->data < ((vm_word_t*)&vm->ir)->data)
+    if (vm_acc(vm)->data < vm->ir.data)
         vm_psw(vm)->data |= 0x01;
 }
 
@@ -350,7 +350,7 @@ void vm_close(vm_t* vm)
 
 void vm_fetch(vm_t* vm)
 {
-    *((vm_word_t*)&vm->ir) = *vm_ram(vm, *vm_pc(vm));
+    vm->ir = *vm_ram(vm, *vm_pc(vm));
 }
 
 void vm_exec(vm_t* vm)

@@ -10,17 +10,19 @@
 
 typedef uint16_t vm_addr_t;
 
-typedef struct
+typedef union
 {
-	uint16_t opc;
-	uint8_t op2;
-	uint8_t op1;
-} vm_instruction_t;
-
-typedef struct
-{
-    uint16_t unused;
-    uint16_t data;
+    struct {
+        uint16_t unused;
+        uint16_t data;
+    };
+    
+    struct
+    {
+        uint16_t opc;
+        uint8_t op2;
+        uint8_t op1;
+    };
 } vm_word_t;
 
 typedef enum
@@ -60,7 +62,7 @@ typedef struct _vm_process_t
 
 typedef struct
 {
-	vm_instruction_t ir; // instruction register
+	vm_word_t ir; // instruction register
 
     uint32_t ic;
 

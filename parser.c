@@ -39,7 +39,7 @@ uint16_t parse_4digit(const char* str)
     return ret;
 }
 
-void parse_pbrain_instruction(vm_instruction_t* inst, const char* str)
+void parse_pbrain_instruction(vm_word_t* inst, const char* str)
 {
     inst->opc = parse_2digit(str);
     
@@ -50,7 +50,7 @@ void parse_pbrain_instruction(vm_instruction_t* inst, const char* str)
         case 13: // SUBI
         case 22: // CMPEQI
         case 23: // CMPLTI
-            ((vm_word_t*)inst)->data = parse_4digit(str + 2);
+            inst->data = parse_4digit(str + 2);
             break;
             
         // Otherwise parse it as two 2-digit numbers
@@ -69,7 +69,7 @@ void parse_pbrain(vm_t* vm, FILE* f, vm_addr_t base_addr)
     char buf[512];
     while (fgets(buf, 512, f)) {
         if (strlen(buf) > 6 && buf[0] != '#') {
-            parse_pbrain_instruction((vm_instruction_t*)&vm->ram[inst], buf);
+            parse_pbrain_instruction(&vm->ram[inst], buf);
             ++inst;
         }
         ++linenum;
