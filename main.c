@@ -84,7 +84,7 @@ int main(int argc, char** argv)
         switch (parser) {
             case PARSE_PBRAIN:
                 parse_pbrain(vm, f, ram_size * proci);
-                vm_spawn(vm, ram_size * proci);
+                vm_spawn(vm, ram_size * proci, ram_size);
                 break;
             case PARSE_ASM:
                 parse_asm(vm, f, ram_size * proci);

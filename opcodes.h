@@ -37,6 +37,11 @@ typedef enum
 	OP_DIVR = 55, // Divide contents of register from accumulator: AC <- AC / Rn
 	OP_DIVMR = 56, // Divide accumulator immediate: AC <- AC / M(Px)
 	OP_DIVMD = 57, // Divide contents of register from accumulator: AC <- AC / M(XX)
+    
+    OP_MODI = 35, // AC % XXXX
+    OP_MODR = 36, // AC <- AC % Rn
+    OP_MODMR = 37, // AC <- AC / M(Px)
+    OP_MODMD = 38, // AC <- AC % M(XX)
 
 	OP_CMPEQR = 20, // Compare equal register: if AC == Rn then PSW[0] = 1 else PSW[0] = 0
 	OP_CMPLTR = 21, // Compare less register : if AC <  Rn then PSW[0] = 1 else PSW[0] = 0
@@ -47,7 +52,7 @@ typedef enum
     OP_BRF = 25, // Branch false conditional: if PSW[0] = F then PC = XX
 	OP_BRU = 26, // Branch unconditional: PC = XX
 
-    OP_HALT = 32,
+    OP_HALT = 98,
 	OP_INT = 27, // syscall(XX)
     
     OP_PUSH = 28, // M(SP++) <- R(XX)
@@ -55,13 +60,34 @@ typedef enum
     
     OP_LAR = 30, // AC <- R(XX)
     OP_SAR = 31, // R(XX) <- AC
+    
+    OP_SETMR = 60, // MR <- AC
+    OP_READMR = 61, // AC <- MR
 
 	// Extensions
-    OP_PRINTCHR = 96, // Print character contents of accumulator
-    OP_PRINTNUM = 97, // Print numeric contents of accumulator
-    OP_NOOP = 98,
-	OP_DBGBRK = 99
+	OP_DBGBRK = 90,
+    OP_PRINTCHR = 91, // Print character contents of accumulator
+    OP_PRINTNUM = 92, // Print numeric contents of accumulator
+    OP_NOOP = 99,
+    
+    // Syscalls (only accessible via OP_INT)
+    OP_INT_PRINT = 100,
+    OP_INT_GETPID = 101,
+    OP_INT_SEND_MSG = 102,
+    OP_INT_RECV_MSG = 103,
+    OP_INT_RECV_ANY = 104,
+    
+    OP_INT_SEM_WAIT = 106,
+    OP_INT_SEM_SIGNAL = 107,
 } op;
+
+typedef enum {
+    INT_PRINT = 0,
+    INT_GETPID = 1,
+    INT_SEND_MSG = 2,
+    INT_RECV_MSG = 3,
+    INT_RECV_ANY = 4
+} vm_syscall;
 
 #endif // _OPCODES_H_
 
