@@ -81,6 +81,12 @@ int main(int argc, char** argv)
     for (size_t proci = 0; proci < process_count; ++proci) {
         f = fopen(processes[proci], "r");
         
+        if (f == NULL) {
+            fprintf(stderr, "Could not open file for input: %s.\n", processes[proci]);
+            vm_close(vm);
+            return 1;
+        }
+        
         switch (parser) {
             case PARSE_PBRAIN:
                 parse_pbrain(vm, f, ram_size * proci);

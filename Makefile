@@ -1,8 +1,9 @@
 
 rootdir=.
 
-# Where the source files and libraries are
-CC=gcc -c -std=c99
+# Yes, I know gnu99 isn't technically c99. Don't tell prof. Dickens.
+# I need it for anonymous structs. vm.h line 16.
+CC=gcc -c -std=gnu99
 LD=gcc 
 
 # List of source files
@@ -28,12 +29,11 @@ clean:
 
 	@rm -rf dist
 
-package:
-	@rm -rf dist
+dist:
 	@mkdir dist
 	@mkdir dist/obj
 	@cp Makefile dist
-	@cp test.sh dist
+	@cp test*.sh dist
 	@cp *.c dist
 	@cp *.h dist
 	@cp -R programs dist
