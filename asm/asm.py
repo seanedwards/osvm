@@ -15,6 +15,8 @@ def int_name(x):
         "send_msg": 2,
         "recv_msg": 3,
         "recv_any": 4,
+        "wait": 6,
+        "signal": 7,
     }[x.lower()]
 
 def resolve(x):

@@ -1,0 +1,21 @@
+
+
+INT GETPID #R0 = PID
+
+ACLOADI 1 #R1 = semaphore index 1
+SAR 1
+
+:loop
+
+PUSH 0
+PUSH 1
+
+INT WAIT
+
+PUSH 0
+PUSH 1
+
+INT SIGNAL
+
+JMP :loop
+

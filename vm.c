@@ -72,7 +72,7 @@ vm_word_t* vm_ram(vm_t* vm, uint16_t addr) { return vm_proc_ram(vm, vm_current_p
 vm_word_t* vm_stack(vm_t* vm, size_t offset) { return vm_proc_stack(vm, vm_current_process(vm), offset); }
 
 vm_semaphore_t* vm_semaphore(vm_t* vm, size_t idx) {
-    PRECONDITION(vm, idx >= SEMAPHORE_COUNT, "Semaphore index out of range");
+    PRECONDITION(vm, idx < SEMAPHORE_COUNT, "Semaphore index out of range");
     return &vm->semaphores[idx];
 }
 
@@ -367,37 +367,37 @@ void i_int_sem_wait(vm_t* vm) {
     uint16_t sem_idx = vm_stack(vm, 0)->data;
     vm_semaphore_t* sem = vm_semaphore(vm, sem_idx);
     
+    vm_pop(vm); // pop the semaphore index
+    vm_pop(vm); // pop the PID, which we had to pass for who knows what reason.
+    
     if (sem->val < 0) {
+        DBG_PRINTF2(vm, "Process %d waiting on semaphore %d\n", vm_current_process(vm)->pid, sem_idx);
         vm_pl_append(sem->blocked, vm_current_process(vm));
         vm->current_process = vm_scheduler_pop(vm);
-        DBG_PRINTF2(vm, "Process %d waiting on semaphore %d\n", vm_current_process(vm)->pid, sem_idx);
     }
     --sem->val;
     
     if (sem->val < 0)
-        assert(-sem->val == vm_pl_size(sem->blocked) - 1);
-    
-    vm_pop(vm); // pop the semaphore index
-    vm_pop(vm); // pop the PID, which we had to pass for who knows what reason.
+        assert(-sem->val == vm_pl_size(sem->blocked) + 1);
 }
 
 void i_int_sem_signal(vm_t* vm) {
     uint16_t sem_idx = vm_stack(vm, 0)->data;
     vm_semaphore_t* sem = vm_semaphore(vm, sem_idx);
     
+    vm_pop(vm); // pop the semaphore index
+    vm_pop(vm); // pop the PID, which we had to pass for who knows what reason.
+    
     ++sem->val;
     
     if (sem->val < 0) {
-        DBG_PRINTF2(vm, "Process %d signaled by semaphore %d", vm_pl_first(sem->blocked)->pid, sem_idx);
+        DBG_PRINTF3(vm, "Process %d signaled by PID %d on semaphore %d\n", vm_pl_first(sem->blocked)->pid, vm_current_process(vm)->pid, sem_idx);
         vm_pl_append(vm->ready_queue, vm_pl_first(sem->blocked));
         vm_pl_pop_first(sem->blocked);
     }
     
     if (sem->val < 0)
-        assert(-sem->val == vm_pl_size(sem->blocked) - 1);
-    
-    vm_pop(vm); // pop the semaphore index
-    vm_pop(vm); // pop the PID, which we had to pass for who knows what reason.
+        assert(-sem->val == vm_pl_size(sem->blocked) + 1);
 }
 
 
